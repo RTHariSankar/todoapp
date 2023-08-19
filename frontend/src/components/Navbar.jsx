@@ -1,12 +1,26 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const add = ()=>{
+    navigate("/addtask");
+  }
+ const comp = ()=>{
+    navigate("/completedtasks");
+  }  
+   const incomp = () => {
+     navigate("/Incompleted task");
+   };
+    const all = () => {
+      navigate("/");
+    };
   return (
     <div>
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <div className="container-fluid">
           <button
-            class="navbar-toggler"
+            className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarTogglerDemo01"
@@ -14,45 +28,36 @@ const Navbar = () => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a class="navbar-brand" href="#">
-              TODO LIST
-            </a>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/addtask">
+          <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <p className="navbar-brand">TODO LIST</p>
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <p
+                  className="nav-link active"
+                  aria-current="page"
+                  onClick={add}
+                >
                   Add task
-                </a>
+                </p>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/">
+              <li className="nav-item">
+                <p className="nav-link" onClick={all}>
                   Viewall tasks Tasks
-                </a>
+                </p>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/completedtasks">
+              <li className="nav-item">
+                <p className="nav-link" onClick={comp}>
                   Completed Tasks
-                </a>
+                </p>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/Incompleted task">
+              <li className="nav-item">
+                <p className="nav-link" onClick={incomp}>
                   Incomplete Tasks
-                </a>
+                </p>
               </li>
             </ul>
-            <form class="d-flex" role="search">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
           </div>
         </div>
       </nav>

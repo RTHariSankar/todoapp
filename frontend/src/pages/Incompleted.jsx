@@ -8,8 +8,7 @@ import { useNavigate } from "react-router-dom";
 const Incompleted = () => {
   const [input, setInput] = useState([]);
   const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchDataFromDatabase();
@@ -18,7 +17,8 @@ const Incompleted = () => {
   const fetchDataFromDatabase = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/viewalltasks"
+        // "http://localhost:5000/api/viewalltasks"
+        "/api/viewalltasks"
       );
       const data = response.data; // Assuming the data is directly in the response
 
@@ -35,13 +35,11 @@ const Incompleted = () => {
       setLoading(false); // Set loading to false even if there's an error
     }
   };
-
-  // Filter tasks with status "Incomplete"
-  const incompleteTasks = input.filter((task) => task.status === "Incomplete");
-
   const deleteClicked = (id) => {
     axios
-      .delete(`http://localhost:5000/api/deletetask/${id}`)
+      // .delete(`http://localhost:5000/api/deletetask/${id}`)
+      .delete(`/api/deletetask/${id}`)
+
       .then((response) => {
         if (response.data.message === "Task deleted successfully") {
           alert(response.data.message);
@@ -58,13 +56,16 @@ const Incompleted = () => {
 
       try {
         axios
-          .put(`http://localhost:5000/api/updateTask/${val._id}`, val)
+          // .put(`http://localhost:5000/api/updateTask/${val._id}`, val)
+          .put(`/api/updateTask/${val._id}`, val)
+
           .then((response) => {
-            if (response.data.message === "Task updated successfully") {
+            if (response.data.message === "Task Updated successfully") {
               alert(response.data.message);
               fetchDataFromDatabase();
             } else {
               alert(response.data.message);
+              fetchDataFromDatabase();
             }
           })
           .catch((error) => {
@@ -78,13 +79,16 @@ const Incompleted = () => {
 
       try {
         axios
-          .put(`http://localhost:5000/api/updateTask/${val._id}`, val)
+          // .put(`http://localhost:5000/api/updateTask/${val._id}`, val)
+          .put(`/api/updateTask/${val._id}`, val)
+
           .then((response) => {
-            if (response.data.message === "Task updated successfully") {
+            if (response.data.message === "Task Updated successfully") {
               alert(response.data.message);
               fetchDataFromDatabase();
             } else {
               alert(response.data.message);
+              fetchDataFromDatabase();
             }
           })
           .catch((error) => {
@@ -95,59 +99,67 @@ const Incompleted = () => {
       }
     }
   };
-    const viewClicked = (val) => {
-      navigate("/addtask", {
-        state: { updateData: val },
-      });
-    };
+
+  const viewClicked = (val) => {
+    navigate("/addtask", {
+      state: { updateData: val },
+    });
+  };
 
 
+  const incompleteTasks = input.filter((task) => task.status === "Incomplete");
 
   return (
-    <div>
+    <>
       <Navbar />
 
-      <table className="table table-striped-columns">
-        <thead>
-          <tr>
-            <th scope="col">Sl no</th>
-            <th scope="col">Task</th>
-            <th scope="col">Actions</th>
-            <th scope="col">check if completed</th>
-          </tr>
-        </thead>
-        <tbody>
-          {loading ? (
-            <tr>
-              <td colSpan="4">Loading...</td>
-            </tr>
-          ) : (
-            incompleteTasks.map((val, i) => (
-              <tr key={i}>
-                <th scope="row">{i + 1}</th>
-                <td>{val.title}</td>
-                <td>
-                  <EditIcon onClick={() => viewClicked(val)} />
-                  <DeleteIcon onClick={() => deleteClicked(val._id)} />
-                </td>
-                <td>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id={`flexCheckDefault-${i}`}
-                      checked={val.status === "Complete"}
-                      onChange={(e) => handleCheckboxChange(e, val)}
-                    />
-                  </div>
-                </td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-    </div>
+      <div className="container mt-3 text-center">
+        <div className="row">
+          <div className="col col-sm-12 col-md-9 col-lg-9 mx-auto ">
+            <table className="table table-striped-columns">
+              <thead>
+                <tr>
+                  <th scope="col">Sl no</th>
+                  <th scope="col">Task</th>
+                  <th scope="col">Actions</th>
+                  <th scope="col">check if completed</th>
+                </tr>
+              </thead>
+              <tbody>
+                {loading ? (
+                  <tr>
+                    <td colSpan="4">Loading...</td>
+                  </tr>
+                ) : (
+                  incompleteTasks.map((val, i) => (
+                    <tr key={i}>
+                      <th scope="row">{i + 1}</th>
+                      <td>{val.title}</td>
+                      <td>
+                        <EditIcon onClick={() => viewClicked(val)} />
+                        <DeleteIcon onClick={() => deleteClicked(val._id)} />
+                      </td>
+                      <td>
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id={`flexCheckDefault-${i}`}
+                            checked={val.status === "Complete"}
+                            onChange={(e) => handleCheckboxChange(e, val)}
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

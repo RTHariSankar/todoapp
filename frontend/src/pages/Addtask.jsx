@@ -15,7 +15,14 @@ const Addtask = () => {
   useEffect(() => {
     if (location.state && location.state.updateData) {
       setInput(location.state.updateData);
+    }else{
+      setInput({
+        title: "",
+        description: "",
+        status: "",
+      });
     }
+    
   }, [location]);
 
   const inputHandler = (e) => {
@@ -29,8 +36,8 @@ const Addtask = () => {
     if (location.state && location.state.updateData) {
       axios
         .put(
-          // `/api/updateRequirement/${location.state.updateData._id}`,
-          `http://localhost:5000/api/updateTask/${location.state.updateData._id}`,
+          // `http://localhost:5000/api/updateTask/${location.state.updateData._id}`,
+          `/api/updateTask/${location.state.updateData._id}`,
 
           input
         )
@@ -47,8 +54,8 @@ const Addtask = () => {
         });
     } else {
       axios
-        // .post("/api/requirementAdminPost", input)
-        .post("http://localhost:5000/api/addtasks", input)
+        // .post("http://localhost:5000/api/addtasks", input)
+        .post("/api/addtasks", input)
 
         .then((response) => {
           if (response.data.message === "Task added successfully") {
@@ -65,71 +72,79 @@ const Addtask = () => {
   };
 
   return (
-    <div>
+    <>
       <Navbar />
 
-      <form onSubmit={submitClicked}>
-        <div className="mb-3">
-          <label for="exampleInputTasksTitle" className="form-label">
-            Task Title
-          </label>
-          <input
-            onChange={inputHandler}
-            type="text"
-            className="form-control"
-            id="exampleInputTask"
-            aria-describedby="taskHelp"
-            name="title"
-            value={input.title}
-          />
+      <div className="container mt-3">
+        <div className="row">
+          <div className="col col-sm-12 col-md-9 col-lg-9">
+            <form onSubmit={submitClicked}>
+              <div className="mb-3">
+                <label htmlFor="exampleInputTasksTitle" className="form-label">
+                  Task Title
+                </label>
+                <input
+                  onChange={inputHandler}
+                  type="text"
+                  className="form-control"
+                  id="exampleInputTask"
+                  aria-describedby="taskHelp"
+                  name="title"
+                  value={input.title}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="exampleInputEmail1" className="form-label">
+                  Task Description
+                </label>
+                <input
+                  onChange={inputHandler}
+                  type="text"
+                  name="description"
+                  className="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  value={input.description}
+                />
+              </div>
+              <div className="form-check">
+                <input
+                  onChange={inputHandler}
+                  name="status"
+                  className="form-check-input"
+                  type="radio"
+                  id="flexRadioDefault1"
+                  value="Complete" // Different value htmlFor Complete
+                  checked={input.status === "Complete"}
+                />
+                <label className="form-check-label" htmlFor="flexRadioDefault1">
+                  Complete
+                </label>
+              </div>
+              <div className="form-check">
+                <input
+                  name="status"
+                  onChange={inputHandler}
+                  className="form-check-input"
+                  type="radio"
+                  id="flexRadioDefault2"
+                  value="Incomplete" // Different value htmlFor Incomplete
+                  checked={input.status === "Incomplete"} // Check based on the selected value            checked
+                />
+                <label className="form-check-label" htmlFor="flexRadioDefault2">
+                  Incomplete
+                </label>
+              </div>
+              <div className="container mx-auto">
+                <button type="submit" className="btn btn-primary mt-3">
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-        <div className="mb-3">
-          <label for="exampleInputEmail1" className="form-label">
-            Task Description
-          </label>
-          <input
-            onChange={inputHandler}
-            type="text"
-            name="description"
-            className="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            value={input.description}
-          />
-        </div>
-        <div className="form-check">
-          <input
-            onChange={inputHandler}
-            name="status"
-            className="form-check-input"
-            type="radio"
-            id="flexRadioDefault1"
-            value="Complete" // Different value for Complete
-            checked={input.status === "Complete"}
-          />
-          <label className="form-check-label" for="flexRadioDefault1">
-            Complete
-          </label>
-        </div>
-        <div className="form-check">
-          <input
-            name="status"
-            onChange={inputHandler}
-            className="form-check-input"
-            type="radio"
-            id="flexRadioDefault2"
-            value="Incomplete" // Different value for Incomplete
-            checked={input.status === "Incomplete"} // Check based on the selected value            checked
-          />
-          <label className="form-check-label" for="flexRadioDefault2">
-            Incomplete
-          </label>
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form>
-    </div>
+      </div>
+    </>
   );
 };
 

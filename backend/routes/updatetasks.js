@@ -4,7 +4,7 @@ const updateTask = express();
 updateTask.use(express.json());
 updateTask.use(express.urlencoded({ extended: true }));
 
-const updateData = require("../model/model");
+const taskData = require("../model/model");
 
 updateTask.put("/updateTask/:id", async (req, res) => {
   try {
@@ -13,10 +13,10 @@ updateTask.put("/updateTask/:id", async (req, res) => {
       $set: {
         title: req.body.title,
         description: req.body.description,
-        status: req.body.status,
-      },
+        status: req.body.status
+      }
     };
-    await updateData.findByIdAndUpdate(id, updatedData);
+    await taskData.findByIdAndUpdate(id, updatedData);
     res.status(200).json({ message: "Task Updated successfully" });
   } catch (error) {
     console.error(error);
