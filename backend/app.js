@@ -14,7 +14,7 @@ app.use(cors());
 
 require('./db/db');
 
-app.use(express.static(path.join(__dirname, "build")));
+// app.use(express.static(path.join(__dirname, "build")));
 
 const addtasks = require("./routes/addtask");
 app.use("/api", addtasks);
@@ -28,14 +28,14 @@ app.use("/api", deletetask);
 const updateTask = require("./routes/updatetasks");
 app.use("/api", updateTask);
 
-app.get('*',async(req,res)=>{
-  try{
-    res.sendFile(path.join(__dirname,'build/index.html'));
-}
-  catch(error){
-    console.log(error);
-  }
-})
+// app.get('*',async(req,res)=>{
+//   try{
+//     res.sendFile(path.join(__dirname,'build/index.html'));
+// }
+//   catch(error){
+//     console.log(error);
+//   }
+// })
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

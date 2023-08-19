@@ -17,8 +17,8 @@ const Completed = () => {
   const fetchDataFromDatabase = async () => {
     try {
       const response = await axios.get(
-        // "http://localhost:5000/api/viewalltasks"
-        "/api/viewalltasks"
+        "http://localhost:5000/api/viewalltasks"
+        // "/api/viewalltasks"
       );
       const data = response.data; // Assuming the data is directly in the response
 
@@ -37,8 +37,8 @@ const Completed = () => {
   };
   const deleteClicked = (id) => {
     axios
-      // .delete(`http://localhost:5000/api/deletetask/${id}`)
-      .delete(`/api/deletetask/${id}`)
+      .delete(`http://localhost:5000/api/deletetask/${id}`)
+      // .delete(`/api/deletetask/${id}`)
 
       .then((response) => {
         if (response.data.message === "Task deleted successfully") {
@@ -56,8 +56,8 @@ const Completed = () => {
 
       try {
         axios
-          // .put(`http://localhost:5000/api/updateTask/${val._id}`, val)
-          .put(`/api/updateTask/${val._id}`, val)
+          .put(`http://localhost:5000/api/updateTask/${val._id}`, val)
+          // .put(`/api/updateTask/${val._id}`, val)
 
           .then((response) => {
             if (response.data.message === "Task Updated successfully") {
@@ -79,8 +79,8 @@ const Completed = () => {
 
       try {
         axios
-          // .put(`http://localhost:5000/api/updateTask/${val._id}`, val)
-          .put(`/api/updateTask/${val._id}`, val)
+          .put(`http://localhost:5000/api/updateTask/${val._id}`, val)
+          // .put(`/api/updateTask/${val._id}`, val)
 
           .then((response) => {
             if (response.data.message === "Task Updated successfully") {

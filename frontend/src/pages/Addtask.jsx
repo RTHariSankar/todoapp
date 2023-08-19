@@ -36,8 +36,8 @@ const Addtask = () => {
     if (location.state && location.state.updateData) {
       axios
         .put(
-          // `http://localhost:5000/api/updateTask/${location.state.updateData._id}`,
-          `/api/updateTask/${location.state.updateData._id}`,
+          `http://localhost:5000/api/updateTask/${location.state.updateData._id}`,
+          // `/api/updateTask/${location.state.updateData._id}`,
 
           input
         )
@@ -54,8 +54,8 @@ const Addtask = () => {
         });
     } else {
       axios
-        // .post("http://localhost:5000/api/addtasks", input)
-        .post("/api/addtasks", input)
+        .post("http://localhost:5000/api/addtasks", input)
+        // .post("/api/addtasks", input)
 
         .then((response) => {
           if (response.data.message === "Task added successfully") {
